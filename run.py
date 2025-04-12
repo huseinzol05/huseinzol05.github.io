@@ -26,6 +26,12 @@ template = """
         max-width: 62em;
         margin: 15 auto;
       }
+
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
     </style>
 
     <title>{{title}}</title>
@@ -63,8 +69,7 @@ files = glob('*/*.ipynb')
 for f in files:
   title = os.path.split(f)[1].split('.')[0]
   notebook = nbformat.read(open(f), as_version=4)
-  html_exporter = HTMLExporter(
-      template_file = 'base', exclude_input_prompt = False, exclude_output_prompt = False)
+  html_exporter = HTMLExporter(template_file = 'base')
   (html, resources) = html_exporter.from_notebook_node(notebook)
   html = html.replace('<img alt', '<img width="100%" alt')
   with open(f.replace('.ipynb', '.html'), "w", encoding="utf-8") as f:
