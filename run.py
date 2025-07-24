@@ -1,5 +1,6 @@
 from glob import glob
 from nbconvert import HTMLExporter
+from tqdm import tqdm
 import nbformat
 import os
 
@@ -66,7 +67,7 @@ with open('index.html', 'w') as fopen:
     fopen.write(index)
 
 files = glob('*/*.ipynb')
-for f in files:
+for f in tqdm(files):
   title = os.path.split(f)[1].split('.')[0]
   notebook = nbformat.read(open(f), as_version=4)
   html_exporter = HTMLExporter(template_file = 'base')
